@@ -6,9 +6,24 @@
     <link type="text/css" rel="stylesheet" href="../styles/styles.css" />
 </head>
 <body>
-    <h3 class="test">Hello, world</h3>
+    <h3 id="hello" class="test">Hello, world</h3>
     <div>
-
+        <input type="button" id="toggle" value="toggle" />
     </div>
+    <script type="text/javascript" src="../scripts/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#toggle').on('click', function () {
+                var cssClass = 'test',
+                    ele = $('#hello'),
+                    red = ele.hasClass(cssClass);
+                if (red) {
+                    ele.removeClass(cssClass);
+                } else {
+                    ele.addClass(cssClass);
+                }
+            })
+        })
+    </script>
 </body>
 </html>

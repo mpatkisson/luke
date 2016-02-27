@@ -36,6 +36,7 @@ public class App extends Application {
         String url = getClass().getResource(html).toExternalForm();
         log.debug("Content loaded from: " + url);
         root.getEngine().load(url);
+        log.debug("JavaScript Enabled? : " + root.getEngine().isJavaScriptEnabled());
         root.setZoom(Screen.getPrimary().getDpi() / 96);
 
         log.debug("Showing JFX scene");
