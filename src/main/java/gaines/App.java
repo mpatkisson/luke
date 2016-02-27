@@ -33,10 +33,9 @@ public class App extends Application {
         log.debug("Loading main view from: {}", html);
 
         final WebView root = new WebView();
-        InputStream stream = getClass().getResourceAsStream(html);
-        String content = new Scanner(stream, "UTF-8").useDelimiter("\\A").next();
-        log.debug("Content is: " + content);
-        root.getEngine().loadContent(content);
+        String url = getClass().getResource(html).toExternalForm();
+        log.debug("Content loaded from: " + url);
+        root.getEngine().load(url);
         root.setZoom(Screen.getPrimary().getDpi() / 96);
 
         log.debug("Showing JFX scene");
