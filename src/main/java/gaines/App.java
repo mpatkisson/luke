@@ -4,9 +4,17 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.web.WebView;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.InputStream;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Scanner;
 
 public class App extends Application {
 
@@ -21,16 +29,19 @@ public class App extends Application {
 
         log.info("Starting Hello JavaFX and Maven demonstration application");
 
-        String fxmlFile = "/fxml/hello.fxml";
-        log.debug("Loading FXML for main view from: {}", fxmlFile);
-        FXMLLoader loader = new FXMLLoader();
-        Parent rootNode = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
+        final String html = "/html/index.html";
+        log.debug("Loading main view from: {}", html);
+
+        final WebView root = new WebView();
+        InputStream stream = getClass().getResourceAsStream(html);
+        String content = new Scanner(stream, "UTF-8").useDelimiter("\\A").next();
+        log.debug("Content is: " + content);
+        root.getEngine().loadContent(content);
+        root.setZoom(Screen.getPrimary().getDpi() / 96);
 
         log.debug("Showing JFX scene");
-        Scene scene = new Scene(rootNode, 400, 200);
-        scene.getStylesheets().add("/styles/styles.css");
-
-        stage.setTitle("Hello JavaFX and Maven");
+        Scene scene = new Scene(root, 800, 600);
+        stage.setTitle("Hello JavaFx, HTML5, and Maven");
         stage.setScene(scene);
         stage.show();
     }
